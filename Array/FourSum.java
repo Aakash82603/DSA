@@ -1,32 +1,54 @@
 package Array;
 
-import java.util.Scanner;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 public class FourSum {
     public static void main(String[] args) {
-        int[] arr = new int[5];
-        int target=8;
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter the number of elements in the array");
-        for (int i = 0; i < 5; i++) {
-            int n = sc.nextInt();
-            arr[i] = n;
-        }
-        for (int i = 0; i < 5; i++) {
-            for (int j = i + 1; j < 5; j++) {
-                for (int k = j + 1; k < 5; k++) {
-                    for (int l = k + 1; l < 5; l++) {
-                        if (arr[i] + arr[j] + arr[k] + arr[l] == target) {
-                            System.out.println("The four elements are: " + arr[i] + ", " + arr[j] + ", " + arr[k] + ", " + arr[l]);
+        int[] nums = {-1, 0, 1, 2, -1, -4};
+        int target = -2;
+        System.out.println(new FourSum().fourSum(nums, target));
 
+    }
+
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        Arrays.sort(nums);
+        List<List<Integer>> list=new ArrayList<>();
+        for(int i=0; i<nums.length-3; i++){
+            if(i>0 && nums[i]==nums[i-1]){
+                continue;
+            }
+            for(int j=i+1; j<nums.length-2; j++){
+                if(j>i+1 && nums[j]==nums[j-1]){
+                    continue;
+                }
+                int k=j+1;
+                int l=nums.length-1;
+                while(k<l){
+                    int sum =nums[i]+nums[j]+nums[k]+nums[l];
+                    if(sum>target){
+                        l--;
+                    }
+                    else if(sum<target){
+                        k++;
+                    }
+                    else{
+                        list.add(Arrays.asList(nums[i],nums[j],nums[k],nums[l]));
+                        while (k < l && nums[k] == nums[k + 1]) {
+                            k++;
                         }
-                        else {
-                            System.out.println("No four elements found that sum to the target value.");
+                        while (k < l && nums[l] == nums[l - 1]) {
+                            l--;
                         }
+                        k++;
+                        l--;
                     }
                 }
+
             }
         }
+        return list;
     }
 }
+
 
